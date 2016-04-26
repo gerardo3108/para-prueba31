@@ -13,7 +13,7 @@ int contadorh=0,contadorr=0,contadorh1=0,contadorh2=0,numero=0,encontrado=0;
 int clavenueva;
 int dato,op;
 
-void ingresadatos()
+void ingresadatos(1)
 {
 
 system("cls");
