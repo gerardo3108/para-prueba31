@@ -1,0 +1,165 @@
+#include<conio.h>
+#include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
+struct nodo{
+nodo *padre;
+int info;
+nodo *izq;
+nodo *der;
+};
+nodo *nuevo,*head,*ptr,*anterior;
+int contadorh=0,contadorr=0,contadorh1=0,contadorh2=0,numero=0,encontrado=0;
+int clavenueva;
+int dato,op;
+
+void ingresadatos()
+{
+
+system("cls");
+printf("ingreso de información al nodo \n");
+printf("\n Numero: ");
+scanf("%d",&dato);
+}
+
+void ingresar()
+{
+	nuevo=new nodo;
+	nuevo->izq=NULL;
+	nuevo->der=NULL;
+	nuevo->info=dato;
+	clavenueva=dato;
+	/* busca lugar insercion */
+	ptr=head;
+	anterior=NULL;
+	while (ptr!=NULL)
+	{
+	anterior=ptr;
+	if (ptr->info>clavenueva)
+	ptr=ptr->izq;
+	else
+	ptr=ptr->der;
+	};if (anterior==NULL){
+	printf("\n Se crea el arbol con nodo raiz\n");
+	nuevo->padre=NULL;
+	head=nuevo;}
+	else
+	if (anterior->info > clavenueva){
+	anterior->izq=nuevo;nuevo->padre=anterior;}
+	else
+	{anterior->der=nuevo;nuevo->padre=anterior;}
+	}
+
+
+void postorden(nodo *tree)
+{
+	
+if (tree!=NULL){
+postorden(tree->izq);
+postorden(tree->der);
+
+printf("\n dir= %d izq:%d infor:%d der: %d",tree,tree->izq,tree->info,tree->der);
+if(tree->izq==NULL && tree->der==NULL)
+{
+	contadorh=contadorh+1;
+}
+}
+}
+
+void inorden(nodo *tree)
+{
+
+if (tree!=NULL){
+inorden(tree->izq);
+printf("\n dir= %d izq:%d infor:%d der: %d",tree,tree->izq,tree->info,tree->der);
+
+if(tree->izq==NULL && tree->der==NULL)
+{
+	contadorh=contadorh+1;
+}
+if(tree->izq!=NULL || tree->der!=NULL)
+{
+	contadorr=contadorr+1;
+}
+
+inorden(tree->der);
+}
+}
+
+void inorden2(nodo *tree, int buscar1)
+{
+
+if (tree!=NULL){
+inorden2(tree->izq,buscar1);
+printf("\n dir= %d izq:%d infor:%d der: %d",tree,tree->izq,tree->info,tree->der);
+
+if(tree->izq==NULL && tree->der==NULL)
+{
+	contadorh=contadorh+1;
+}
+if(tree->izq!=NULL || tree->der!=NULL)
+{
+	contadorr=contadorr+1;
+}
+if(tree->info==buscar1)
+{
+	encontrado=1;
+}
+inorden2(tree->der,buscar1);
+}
+}
+
+
+void preorden(nodo *tree)
+{
+	
+
+printf("\n dir= %d izq:%d infor:%d der: %d",tree,tree->izq,tree->info,tree->der);
+if (tree!=NULL){
+	if(tree->izq==NULL && tree->der==NULL)
+{
+	contadorh=contadorh+1;
+}
+
+preorden(tree->izq);
+preorden(tree->der);
+
+}
+}
+
+
+ main()
+{
+do {
+system("cls");
+//printf("1. crear el arbol\n");
+printf("1. Ingresar nodo al arbol\n");
+printf("2. Buscar en Inorden\n");
+printf("3. Buscar en Preorden\n");
+printf("4. Buscar en Postorden\n");
+printf("5. Buscar numero \n");
+printf("0. Fin\n");
+printf("\n");
+printf("Ingresa Opci¢n: ");
+scanf("%d",&op);
+switch(op)
+{
+//case 1:{crear(); break;}
+case 1:{ingresadatos();ingresar(); break;}
+case 2:{contadorh=0;contadorr=0; inorden(head); printf("\n El nuemro de hojas es: %d",contadorh);printf("\n El numero de raices es: %d",contadorr); getch(); break;}
+case 3:{contadorh=0;preorden(head);printf("\n El nuemro de hojas es: %d",contadorh);getch(); break;}
+case 4:{contadorh=0;postorden(head);printf("\n El nuemro de hojas es: %d",contadorh);getch(); break;}
+case 5:{encontrado=0; contadorh=0;printf("\n Ingrese nuemro a buscar");scanf("%d",&numero);inorden2(head,numero);
+if(encontrado!=0){
+printf("El numero buscado se encontro");}
+else
+{printf("El numero buscado no existe");
+}
+getch();
+break;}
+}
+
+}
+
+while(op!=0);
+}
